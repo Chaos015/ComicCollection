@@ -114,5 +114,15 @@ namespace ComicCollection.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("search")]
+        public ActionResult<IEnumerable<Comic>> Search(string name)
+            {
+        var comics = _comics
+        .Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+        .ToList();
+
+        return Ok(comics);
+        }
     }
 }
