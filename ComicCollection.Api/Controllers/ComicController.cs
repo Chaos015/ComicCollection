@@ -2,6 +2,8 @@ using ComicCollection.Api.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
+
+
 namespace ComicCollection.Api.Controllers
 {
     [ApiController]
@@ -17,7 +19,7 @@ namespace ComicCollection.Api.Controllers
                 Author = "Alan Moore",
                 Editorial = "DC Comics",
                 PublicationYear = 1988,
-                genre = "Superhéroes"
+                Genre = "Super Heroes"
             },
             new Comic
             {
@@ -26,7 +28,7 @@ namespace ComicCollection.Api.Controllers
                 Author = "Jeph Loeb",
                 Editorial = "Marvel Comics",
                 PublicationYear = 2002,
-                genre = "Superhéroes"
+                Genre = "Super Heroes"
             },
             new Comic
             {
@@ -35,7 +37,7 @@ namespace ComicCollection.Api.Controllers
                 Author = "Brian K. Vaughan",
                 Editorial = "Image Comics",
                 PublicationYear = 2012,
-                genre = "Ciencia Ficción"
+                Genre = "Science Fiction"
             }
         };
 
@@ -95,7 +97,7 @@ namespace ComicCollection.Api.Controllers
             existing.Author = comic.Author;
             existing.Editorial = comic.Editorial;
             existing.PublicationYear = comic.PublicationYear;
-            existing.genre = comic.genre;
+            existing.Genre = comic.Genre;
 
             return NoContent();
         }
@@ -121,6 +123,21 @@ namespace ComicCollection.Api.Controllers
         var comics = _comics
         .Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
         .ToList();
+
+        return Ok(comics);
+        }
+
+        [HttpGet("genre/{genre}")]
+        public ActionResult<IEnumerable<Comic>> GetByGenre(string genre)
+        {
+            if (string.IsNullOrWhiteSpace(genre))
+            {
+            return BadRequest("Genre is required.");
+            }
+
+            var comics = _comics
+            .Where(c => c.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase))
+            .ToList();
 
         return Ok(comics);
         }
