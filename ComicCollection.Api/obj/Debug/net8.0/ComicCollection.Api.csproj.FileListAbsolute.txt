@@ -80,3 +80,5 @@ C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Api\bin\Debug\ne
 C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Api\bin\Debug\net8.0\ComicCollection.Infrastructure.dll
 C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Api\bin\Debug\net8.0\ComicCollection.Infrastructure.pdb
 C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Api\bin\Debug\net8.0\ComicCollection.Domain.pdb
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Api\bin\Debug\net8.0\ComicCollection.Application.dll
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Api\bin\Debug\net8.0\ComicCollection.Application.pdb

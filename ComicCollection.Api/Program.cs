@@ -1,3 +1,5 @@
+using ComicCollection.Application.Contract;
+using ComicCollection.Application.Services;
 using ComicCollection.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using ComicCollection.Infrastructure.Interfaces;
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<ComicCollectionContext>(options =>
     ));
 
 builder.Services.AddSingleton<IComicRepository, ComicRepository>();
+builder.Services.AddScoped<IComicService, ComicService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,105 +1,72 @@
-using ComicCollection.Domain.Entities;
-using ComicCollection.Infrastructure.Interfaces;
+using ComicCollection.Application.Contract;
+using ComicCollection.Application.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ComicCollection.Api.Controllers
+namespace ComicCollection.Api.Controllers;
+
+[ApiController]
+[Route("api/comics")]
+public class ComicController : ControllerBase
 {
-    [ApiController]
-    [Route("api/comics")]
-    public class ComicController : ControllerBase
+    private readonly IComicService _service;
+
+    public ComicController(IComicService service)
     {
-        private readonly IComicRepository _repository;
+        _service = service;
+    }
 
-        public ComicController(IComicRepository repository)
-        {
-            _repository = repository;
-        }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Comic>> GetAll()
-        {
-            return Ok(_repository.GetAll());
-        }
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        var result = _service.GetAll();
 
-        [HttpGet("{id}")]
-        public ActionResult<Comic> GetById(int id)
-        {
-            var comic = _repository.GetById(id);
+        return result.Success
+            ? Ok(result)
+            : BadRequest(result);
+    }
 
-            if (comic == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(comic);
-        }
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        var result = _service.GetById(id);
 
-        [HttpPost]
-        public ActionResult<Comic> Create(Comic comic)
-        {
-            if (string.IsNullOrWhiteSpace(comic.Name))
-            {
-                return BadRequest("Comic title is required.");
-            }
+        return result.Success
+            ? Ok(result)
+            : NotFound(result);
+    }
 
-            _repository.Add(comic);
 
-            return CreatedAtAction(nameof(GetById), new { id = comic.Id }, comic);
-        }
+    [HttpPost]
+    public IActionResult Create(ComicDto comic)
+    {
+        var result = _service.Create(comic);
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, Comic comic)
-        {
-            var existing = _repository.GetById(id);
+        return result.Success
+            ? Created("", result)
+            : BadRequest(result);
+    }
 
-            if (existing == null)
-            {
-                return NotFound();
-            }
 
-            comic.Id = id;
-            _repository.Update(comic);
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, ComicDto comic)
+    {
+        var result = _service.Update(id, comic);
 
-            return NoContent();
-        }
+        return result.Success
+            ? Ok(result)
+            : BadRequest(result);
+    }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var existing = _repository.GetById(id);
 
-            if (existing == null)
-            {
-                return NotFound();
-            }
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var result = _service.Delete(id);
 
-            _repository.Delete(id);
-
-            return NoContent();
-        }
-
-        [HttpGet("search")]
-        public ActionResult<IEnumerable<Comic>> Search(string name)
-        {
-            var comics = _repository.GetAll()
-                .Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
-
-            return Ok(comics);
-        }
-
-        [HttpGet("genre/{genre}")]
-        public ActionResult<IEnumerable<Comic>> GetByGenre(string genre)
-        {
-            if (string.IsNullOrWhiteSpace(genre))
-            {
-                return BadRequest("Genre is required.");
-            }
-
-            var comics = _repository.GetAll()
-                .Where(c => c.Genre != null &&
-                            c.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
-
-            return Ok(comics);
-        }
+        return result.Success
+            ? Ok(result)
+            : NotFound(result);
     }
 }

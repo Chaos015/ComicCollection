@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "ComicCollection.Api/1.0.0": {
         "dependencies": {
+          "ComicCollection.Application": "1.0.0",
           "ComicCollection.Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.28",
           "Swashbuckle.AspNetCore": "6.6.2"
@@ -600,6 +601,18 @@
           }
         }
       },
+      "ComicCollection.Application/1.0.0": {
+        "dependencies": {
+          "ComicCollection.Domain": "1.0.0",
+          "ComicCollection.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "ComicCollection.Application.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "ComicCollection.Domain/1.0.0": {
         "runtime": {
           "ComicCollection.Domain.dll": {
@@ -1062,6 +1075,11 @@
       "sha512": "sha512-IXoJOXIqc39AIe+CIR7koBtRGMiCt/LPM3lI+PELtDIy9XdyeSrwXFdWV9dzJ2Awl0paLWUaknLxFQ5HpHZUog==",
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
+    },
+    "ComicCollection.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "ComicCollection.Domain/1.0.0": {
       "type": "project",
