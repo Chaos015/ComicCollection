@@ -1,8 +1,9 @@
-namespace ComicCollection.Api.Models.Entities
+using ComicCollection.Domain.Core;
+
+namespace ComicCollection.Domain.Entities
 {
-    public class Comic
-    { 
-        public int Id { get; set; }
+    public class Comic : BaseEntity
+    {
         public string Name { get; set; } = string.Empty;
         public string Author { get; set; } = string.Empty;
         public string Editorial { get; set; } = string.Empty;

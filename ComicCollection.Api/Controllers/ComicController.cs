@@ -1,8 +1,6 @@
-using ComicCollection.Api.Models.Entities;
+using ComicCollection.Domain.Entities;
+using ComicCollection.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-
-
 
 namespace ComicCollection.Api.Controllers
 {
@@ -10,47 +8,23 @@ namespace ComicCollection.Api.Controllers
     [Route("api/comics")]
     public class ComicController : ControllerBase
     {
-        private static readonly List<Comic> _comics = new List<Comic>
+        private readonly IComicRepository _repository;
+
+        public ComicController(IComicRepository repository)
         {
-            new Comic
-            {
-                Id = 1,
-                Name = "Batman: The Killing Joke",
-                Author = "Alan Moore",
-                Editorial = "DC Comics",
-                PublicationYear = 1988,
-                Genre = "Super Heroes"
-            },
-            new Comic
-            {
-                Id = 2,
-                Name = "Spider-Man: Blue",
-                Author = "Jeph Loeb",
-                Editorial = "Marvel Comics",
-                PublicationYear = 2002,
-                Genre = "Super Heroes"
-            },
-            new Comic
-            {
-                Id = 3,
-                Name = "Saga Vol. 1",
-                Author = "Brian K. Vaughan",
-                Editorial = "Image Comics",
-                PublicationYear = 2012,
-                Genre = "Science Fiction"
-            }
-        };
+            _repository = repository;
+        }
 
         [HttpGet]
         public ActionResult<IEnumerable<Comic>> GetAll()
         {
-            return Ok(_comics);
+            return Ok(_repository.GetAll());
         }
 
         [HttpGet("{id}")]
         public ActionResult<Comic> GetById(int id)
         {
-            var comic = _comics.FirstOrDefault(c => c.Id == id);
+            var comic = _repository.GetById(id);
 
             if (comic == null)
             {
@@ -68,36 +42,23 @@ namespace ComicCollection.Api.Controllers
                 return BadRequest("Comic title is required.");
             }
 
-            int newId = _comics.Any()
-                ? _comics.Max(c => c.Id) + 1
-                : 1;
+            _repository.Add(comic);
 
-            comic.Id = newId;
-
-            _comics.Add(comic);
-
-            return CreatedAtAction(
-                nameof(GetById),
-                new { id = comic.Id },
-                comic
-            );
+            return CreatedAtAction(nameof(GetById), new { id = comic.Id }, comic);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, Comic comic)
         {
-            var existing = _comics.FirstOrDefault(c => c.Id == id);
+            var existing = _repository.GetById(id);
 
             if (existing == null)
             {
                 return NotFound();
             }
 
-            existing.Name = comic.Name;
-            existing.Author = comic.Author;
-            existing.Editorial = comic.Editorial;
-            existing.PublicationYear = comic.PublicationYear;
-            existing.Genre = comic.Genre;
+            comic.Id = id;
+            _repository.Update(comic);
 
             return NoContent();
         }
@@ -105,26 +66,25 @@ namespace ComicCollection.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var existing = _comics.FirstOrDefault(c => c.Id == id);
+            var existing = _repository.GetById(id);
 
             if (existing == null)
             {
                 return NotFound();
             }
 
-            _comics.Remove(existing);
+            _repository.Delete(id);
 
             return NoContent();
         }
 
         [HttpGet("search")]
         public ActionResult<IEnumerable<Comic>> Search(string name)
-            {
-        var comics = _comics
-        .Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
-        .ToList();
+        {
+            var comics = _repository.GetAll()
+                .Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
 
-        return Ok(comics);
+            return Ok(comics);
         }
 
         [HttpGet("genre/{genre}")]
@@ -132,14 +92,14 @@ namespace ComicCollection.Api.Controllers
         {
             if (string.IsNullOrWhiteSpace(genre))
             {
-            return BadRequest("Genre is required.");
+                return BadRequest("Genre is required.");
             }
 
-            var comics = _comics
-            .Where(c => c.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+            var comics = _repository.GetAll()
+                .Where(c => c.Genre != null &&
+                            c.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
 
-        return Ok(comics);
+            return Ok(comics);
         }
     }
 }

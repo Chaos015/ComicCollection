@@ -1,0 +1,12 @@
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\bin\Debug\net8.0\ComicCollection.Domain.deps.json
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\bin\Debug\net8.0\ComicCollection.Domain.dll
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\bin\Debug\net8.0\ComicCollection.Domain.pdb
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ComicCollection.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ComicCollection.Domain.AssemblyInfoInputs.cache
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ComicCollection.Domain.AssemblyInfo.cs
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ComicCollection.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ComicCollection.Domain.sourcelink.json
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ComicCollection.Domain.dll
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\refint\ComicCollection.Domain.dll
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ComicCollection.Domain.pdb
+C:\Users\Emile\Documents\GitHub\ComicCollection\ComicCollection.Domain\obj\Debug\net8.0\ref\ComicCollection.Domain.dll

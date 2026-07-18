@@ -1,7 +1,20 @@
+using ComicCollection.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+using ComicCollection.Infrastructure.Interfaces;
+using ComicCollection.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<ComicCollectionContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
+
+builder.Services.AddSingleton<IComicRepository, ComicRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
